@@ -1,0 +1,17 @@
+```
+@startuml
+actor Оператор
+participant Система
+participant Product
+participant StorageLocation
+participant Warehouse
+
+Оператор -> Система : processProductReceipt(product, quantity)
+Система -> Product : updateQuantity(quantity)
+Product -> StorageLocation : addProduct(Product)
+StorageLocation -> Warehouse : updateLocation()
+Warehouse -> Система : confirmPlacement()
+Система -> Оператор : showConfirmation()
+
+@enduml
+```

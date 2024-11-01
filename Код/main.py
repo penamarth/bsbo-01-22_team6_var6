@@ -5,14 +5,14 @@ from classes.product import Product
 from classes.operation import ShipmentOperation
 from classes.user import Operator
 
-ware = Warehouse(1,"123")
-rack = Rack(1, "123")
-ware.addStorageLocation(rack)
-rack.addShelf(Shelf(1, "blabla"))
 
 prod = Product(1, "TestProduct", "tomato")
 
 oper = Operator(1, "testoper")
+
+ware = oper.createWarehouse("blahblah street")
+
+oper.createRack(ware, 2, 10)
 
 oper.startOperationReceipt().prepare(prod, ware).execute()
 

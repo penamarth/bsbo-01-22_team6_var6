@@ -32,7 +32,7 @@ class Rack(StorageLocation):
             if not shelf.isFull():
                 return False
         
-        return (self.product or self.shelves)
+        return (bool(self.product) or bool(self.shelves))
     
     def addShelf(self, shelf: "Shelf"):
         if not self.product:
@@ -77,7 +77,7 @@ class Shelf(StorageLocation):
         for cell in self.cells:
             if not cell.isFull():
                 return False
-        return (self.product or self.cells)
+        return (bool(self.product) or bool(self.cells))
     
     def addCell(self, cell: "Cell"):
         if not self.product:
@@ -120,7 +120,7 @@ class Cell(StorageLocation):
         
     
     def isFull(self):
-        return not self.product
+        return self.product
     
     def addProduct(self, product):
         if not self.isFull():

@@ -50,6 +50,7 @@ class ReceiptOperation(Operation):
         self.warehouse = warehouse
         self.prepared = True
         return self
+    
 
     
         

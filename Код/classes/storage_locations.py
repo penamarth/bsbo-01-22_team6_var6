@@ -126,6 +126,7 @@ class Cell(StorageLocation):
         if not self.isFull():
             print(f"Продукт {product.name}({(product.id)}) размещен в ячейке {self.id}")
             self.product = product
+            return
         
 
         print(f"Не удалось разместить продукт {product.name}({(product.id)}) в ячейке {self.id}")

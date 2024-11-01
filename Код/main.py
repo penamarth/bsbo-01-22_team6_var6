@@ -20,5 +20,5 @@ oper.startOperationReceipt().prepare(prod, ware).execute()
 
 shipment = oper.startOperationShipment()
 shipment.shipment.add_product(prod)
-shipment.execute()
+oper.performOperation(shipment)
 

@@ -10,7 +10,7 @@ class User:
 
    
     
-    def perform_operation(self, operation: Operation):
+    def performOperation(self, operation: Operation):
         operation.user = self
         operation.execute()
 

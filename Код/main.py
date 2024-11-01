@@ -3,6 +3,7 @@ from classes.storage_locations import Rack, Shelf
 from classes.warehouse import Warehouse
 from classes.product import Product
 from classes.operation import ShipmentOperation
+from classes.user import Operator
 
 ware = Warehouse(1,"123")
 
@@ -13,14 +14,11 @@ rack.addShelf(Shelf(1, "blabla"))
 
 prod = Product(1, "TestProduct", "tomato")
 
-avail = ware.getAvailableStorageLocation()
+oper = Operator(1, "testoper")
 
-avail.addProduct(prod)
+oper.startOperationReceipt().prepare(prod, ware).execute()
 
-avail = ware.getAvailableStorageLocation()
-
-
-shpop = ShipmentOperation(1, datetime.datetime.now(), 123)
-shpop.shipment.add_product(prod)
-shpop.execute()
+shipment = oper.startOperationShipment()
+shipment.shipment.add_product(prod)
+shipment.execute()
 

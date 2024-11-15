@@ -1,3 +1,4 @@
+import datetime
 from classes.storage_locations import StorageLocation
 from classes.operation import Operation, ReceiptOperation, ShipmentOperation, OPERATION_ID
 from typing import TYPE_CHECKING
@@ -31,6 +32,9 @@ class Warehouse:
         global OPERATION_ID
         OPERATION_ID+=1
         return ShipmentOperation(OPERATION_ID, oper)
+    
+    def generateReport(self, startDate:datetime.datetime, endDate:datetime.datetime):
+        Operation.fetchOperation(startDate, endDate)
     
     
     def performOperation(self, operation: Operation, oper: "Operator"):

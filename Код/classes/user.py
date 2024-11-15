@@ -1,3 +1,4 @@
+import datetime
 from classes.operation import OPERATION_ID, Operation, ShipmentOperation, ReceiptOperation
 from classes.product import Product
 from classes.shipment import Shipment
@@ -50,8 +51,8 @@ class Manager(User):
     def __init__(self, id, name):
         super().__init__(id, name)
     
-    def generateReport():
-        pass
+    def generateReport(self, startDate:datetime.datetime, endDate:datetime.datetime):
+        Operation.fetchOperation(startDate, endDate)
         
 
 

@@ -1,22 +1,26 @@
 import datetime
-from classes.storage_locations import Rack, Shelf
+from classes.storage_locations import Cell, Rack, Shelf
 from classes.warehouse import Warehouse
 from classes.product import Product
 from classes.operation import ShipmentOperation
 from classes.user import Operator
 
 
-prod = Product(1, "TestProduct", "tomato")
+prod = Product(1, "TestProduct", "tomato", 10)
 
-oper = Operator(1, "testoper")
 
-ware = oper.createWarehouse("blahblah street")
+ware = Warehouse(1, "blabla")
 
-oper.createRack(ware, 2, 10)
+rack = Rack(1, "", 100)
+shelf = Shelf(1,1, 10)
+shelf.addCell(Cell(1,1,5))
+oper = Operator(1, 'test')
 
-oper.startOperationReceipt().prepare(prod, ware).execute()
-
-shipment = oper.startOperationShipment()
+rack.addShelf(shelf)
+ware.addStorageLocation(rack)
+rack.addProduct(prod)
+print(*map(str, rack.getAllProducts()))
+shipment = ware.startOperationShipment(oper)
 shipment.shipment.add_product(prod)
-oper.performOperation(shipment)
+ware.performOperation(shipment, oper)
 

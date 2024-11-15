@@ -13,24 +13,12 @@ class User:
 
    
     
-    def performOperation(self, operation: Operation):
-        operation.user = self
-        operation.execute()
+
 
 
 class Operator(User):
     def __init__(self, id, name):
         super().__init__(id, name)
-
-    def startOperationReceipt(self) -> ReceiptOperation:
-        global OPERATION_ID
-        OPERATION_ID+=1
-        return ReceiptOperation(OPERATION_ID, self)
-        
-    def startOperationShipment(self) -> ShipmentOperation:
-        global OPERATION_ID
-        OPERATION_ID+=1
-        return ShipmentOperation(OPERATION_ID, self)
     
     def createWarehouse(self, address: str) -> Warehouse:
         return Warehouse(1, address)

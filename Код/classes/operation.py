@@ -46,7 +46,7 @@ class ReceiptOperation(Operation):
         if not self.prepared:
             print("Ошибка операции прибытия: невозможно выполнить пустую операцию")
             return 
-        avail = self.warehouse.getAvailableStorageLocation()
+        avail = self.warehouse.getAvailableStorageLocation(self.product)
         if not avail:
             print("Ошибка операции прибытия: склад переполнен")
             return

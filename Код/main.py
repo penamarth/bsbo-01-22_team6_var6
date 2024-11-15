@@ -18,9 +18,10 @@ oper = Operator(1, 'test')
 
 rack.addShelf(shelf)
 ware.addStorageLocation(rack)
-rack.addProduct(prod)
 print(*map(str, rack.getAllProducts()))
+ware.startOperationReceipt(oper).prepare(prod, ware).execute()
 shipment = ware.startOperationShipment(oper)
 shipment.shipment.add_product(prod)
 ware.performOperation(shipment, oper)
+print()
 

@@ -7,6 +7,8 @@ if TYPE_CHECKING:
     from classes.warehouse import Warehouse
     from classes.product import Product
 
+OPERATIONS:list['Operation'] = []
+
 class Operation:
     def __init__(self, id: int, user):
         self.id = id
@@ -15,6 +17,10 @@ class Operation:
     
     def execute(self):
         raise NotImplementedError
+    
+    @staticmethod
+    def fetchOperation(startDate, endDate):
+        return list(filter(lambda x: startDate<x<endDate, OPERATIONS))
 
 class ShipmentOperation(Operation):
     def __init__(self, id, user):
@@ -26,6 +32,7 @@ class ShipmentOperation(Operation):
         if not self.is_sent:
             self.is_sent = True
             self.shipment.send()
+            OPERATIONS.append(self)
             print(f"Успех отправки {self.id}")
 
 class ReceiptOperation(Operation):
@@ -44,6 +51,7 @@ class ReceiptOperation(Operation):
             print("Ошибка операции прибытия: склад переполнен")
             return
         avail.addProduct(self.product)
+        OPERATIONS.append(self)
 
     def prepare(self, product: "Product", warehouse: "Warehouse") -> "ReceiptOperation":
         self.product = product

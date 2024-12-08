@@ -16,7 +16,10 @@ class User:
         self.id = id
         self.name = name
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 713c0fc (feat: added size in code and model diagram)
 class Operator(User):
     def __init__(self, id, name):
         super().__init__(id, name)

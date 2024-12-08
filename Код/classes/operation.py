@@ -1,26 +1,29 @@
 from datetime import datetime
 from typing import TYPE_CHECKING
 from classes.shipment import Shipment
+
 OPERATION_ID = 0
 
 if TYPE_CHECKING:
     from classes.warehouse import Warehouse
     from classes.product import Product
 
-OPERATIONS:list['Operation'] = []
+OPERATIONS: list["Operation"] = []
+
 
 class Operation:
     def __init__(self, id: int, user):
         self.id = id
         self.date = datetime.now()
         self.user = user
-    
+
     def execute(self):
         raise NotImplementedError
-    
+
     @staticmethod
-    def fetchOperation(startDate, endDate):
-        return list(filter(lambda x: startDate<x<endDate, OPERATIONS))
+    def fetchOperations(startDate, endDate):
+        return list(filter(lambda x: startDate < x < endDate, OPERATIONS))
+
 
 class ShipmentOperation(Operation):
     def __init__(self, id, user):
@@ -35,17 +38,18 @@ class ShipmentOperation(Operation):
             OPERATIONS.append(self)
             print(f"Успех отправки {self.id}")
 
+
 class ReceiptOperation(Operation):
     def __init__(self, id, user):
         super().__init__(id, user)
         self.warehouse: Warehouse = None
         self.product = None
         self.prepared = False
-    
+
     def execute(self):
         if not self.prepared:
             print("Ошибка операции прибытия: невозможно выполнить пустую операцию")
-            return 
+            return
         avail = self.warehouse.getAvailableStorageLocation(self.product)
         if not avail:
             print("Ошибка операции прибытия: склад переполнен")
@@ -58,7 +62,3 @@ class ReceiptOperation(Operation):
         self.warehouse = warehouse
         self.prepared = True
         return self
-    
-
-    
-        

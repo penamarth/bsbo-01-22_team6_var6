@@ -1,5 +1,10 @@
 import datetime
-from classes.operation import OPERATION_ID, Operation, ShipmentOperation, ReceiptOperation
+from classes.operation import (
+    OPERATION_ID,
+    Operation,
+    ShipmentOperation,
+    ReceiptOperation,
+)
 from classes.product import Product
 from classes.shipment import Shipment
 from classes.warehouse import Warehouse
@@ -11,19 +16,12 @@ class User:
         self.id = id
         self.name = name
 
-   
-    
-
-
 
 class Operator(User):
     def __init__(self, id, name):
         super().__init__(id, name)
-    
 
 
 class Manager(User):
     def __init__(self, id, name):
         super().__init__(id, name)
-
-

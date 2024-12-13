@@ -4,6 +4,20 @@ from typing import Iterable, List, TYPE_CHECKING
 if TYPE_CHECKING:
     from classes.product import Product
 
+
+class Composite:
+    def __init__(self):
+        self.locations = []
+    
+    def addLocation(self,loc: "StorageLocation"):
+        self.locations.append(loc)
+
+    def removeLocation(self, loc: "StorageLocation"):
+        self.locations.remove(loc)
+
+    def getLocations(self):
+        return self.locations
+
 class StorageLocation:
     def __init__(self, id:int, description: str, size: int):
         self.id = id
@@ -29,7 +43,7 @@ class StorageLocation:
     def getAllProducts(self) -> List["Product"]:
         return self.product
 
-class Rack(StorageLocation):
+class Rack(StorageLocation, Composite):
     def __init__(self, id:int, description: str, size:int):
         super().__init__(id, description, size)
         self.shelves: list["Shelf"] = []
@@ -49,7 +63,7 @@ class Rack(StorageLocation):
         
         return (not self.product) and (self.getFreeSize() > size)
     
-    def addShelf(self, shelf: "Shelf"):
+    def addLocation(self, shelf: "Shelf"):
         if not self.product:
             self.shelves.append(shelf)
             return
@@ -93,7 +107,7 @@ class Rack(StorageLocation):
             res.append(self.product)
         return res
 
-class Shelf(StorageLocation):
+class Shelf(StorageLocation, Composite):
     def __init__(self, id:int, description: str, size:int):
         super().__init__(id, description, size)
         self.cells: list["Cell"] = []
@@ -114,7 +128,7 @@ class Shelf(StorageLocation):
         
         return (not self.product) and (self.getFreeSize() > size)
     
-    def addCell(self, cell: "Cell"):
+    def addLocation(self, cell: "Cell"):
         if not self.product:
             self.cells.append(cell)
             return
@@ -189,3 +203,4 @@ class Cell(StorageLocation):
     
     def getAllProducts(self):
         return [self.product] if self.product else []
+    

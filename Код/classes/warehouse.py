@@ -1,11 +1,6 @@
 import datetime
-from classes.storage_locations import StorageLocation
-from classes.operation import (
-    Operation,
-    ReceiptOperation,
-    ShipmentOperation,
-    OPERATION_ID,
-)
+from classes.storage_locations import Cell, Rack, Shelf, StorageLocation
+from classes.operation import Operation, ReceiptOperation, ShipmentOperation, OPERATION_ID
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -45,3 +40,25 @@ class Warehouse:
     def performOperation(self, operation: Operation, oper: "Operator"):
         operation.user = oper
         operation.execute()
+
+    def addRack(self, description: str, size: int):
+        rack = Rack(1, description, size)
+        self.addStorageLocation(rack)
+        return rack
+    
+    def addShelf(self, rack: Rack, description, size):
+        shelf = Shelf(1, description, size)
+        rack.addLocation(
+            shelf
+        )
+        return shelf
+    
+    def addCell(self, shelf: Shelf, descripion, size):
+        cell = Cell(1, descripion, size)
+        shelf.addLocation(cell)
+
+    def createOperator(self, name):
+        return Operator(1, name)
+    
+    def createProduct(self, name, category, size):
+        return Product(1, name, category, size)

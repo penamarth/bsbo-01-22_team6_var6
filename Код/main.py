@@ -1,10 +1,6 @@
 from classes.warehouse import Warehouse
 
 
-
-
-
-
 ware = Warehouse(1, "blabla")
 prod = ware.createProduct(1, "TestProduct", "tomato", 10)
 

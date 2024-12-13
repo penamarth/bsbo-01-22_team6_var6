@@ -1,5 +1,6 @@
+from datetime import datetime, timedelta
 from classes.warehouse import Warehouse
-
+from classes.operation import OPERATIONS
 
 ware = Warehouse(1, "blabla")
 prod = ware.createProduct(1, "TestProduct", "tomato", 10)
@@ -11,9 +12,13 @@ oper = ware.createOperator('test')
 
 ware.addStorageLocation(rack)
 print(*map(str, rack.getAllProducts()))
+
+
 ware.startOperationReceipt(oper, prod)
-shipment = ware.startOperationShipment(oper)
-shipment.shipment.add_product(prod)
-ware.performOperation(shipment, oper)
-print()
+
+ware.startOperationShipment(oper, (1,))
+
+
+print(list(map(str, ware.generateReport(datetime(2000,1,1),datetime.now()+timedelta(12)))))
+
 

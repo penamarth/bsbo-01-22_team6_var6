@@ -22,7 +22,7 @@ class Operation:
 
     @staticmethod
     def fetchOperations(startDate, endDate):
-        return list(filter(lambda x: startDate < x < endDate, OPERATIONS))
+        return list(filter(lambda x: startDate < x.date < endDate, OPERATIONS))
 
 
 class ShipmentOperation(Operation):
@@ -37,6 +37,9 @@ class ShipmentOperation(Operation):
             self.shipment.send()
             OPERATIONS.append(self)
             print(f"Успех отправки {self.id}")
+
+    def __str__(self):
+        return f"Выбытие: {self.id}, Оператор: {self.user.name}"
 
 
 class ReceiptOperation(Operation):
@@ -62,3 +65,6 @@ class ReceiptOperation(Operation):
         self.warehouse = warehouse
         self.prepared = True
         return self
+
+    def __str__(self):
+        return f"Прибытие: {self.id}, Оператор: {self.user.name }"

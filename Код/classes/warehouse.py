@@ -34,13 +34,19 @@ class Warehouse:
                 if prod.id == id:
                     return prod
 
-    def startOperationShipment(self, oper: "Operator") -> ShipmentOperation:
+    def startOperationShipment(self, oper: "Operator", productIds) -> ShipmentOperation:
         global OPERATION_ID
         OPERATION_ID += 1
-        return ShipmentOperation(OPERATION_ID, oper)
+        operation = ShipmentOperation(OPERATION_ID, oper)
+        for _id in productIds:
+            prod = self.getProductById(_id)
+            if prod:
+                operation.shipment.add_product(prod)
+        
+        operation.execute()
 
     def generateReport(self, startDate: datetime.datetime, endDate: datetime.datetime):
-        Operation.fetchOperations(startDate, endDate)
+        return Operation.fetchOperations(startDate, endDate)
 
     def performOperation(self, operation: Operation, oper: "Operator"):
         operation.user = oper

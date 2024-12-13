@@ -2,10 +2,9 @@ import datetime
 from classes.storage_locations import Cell, Rack, Shelf, StorageLocation
 from classes.operation import Operation, ReceiptOperation, ShipmentOperation, OPERATION_ID
 from typing import TYPE_CHECKING
+from classes.product import Product
 
-if TYPE_CHECKING:
-    from classes.product import Product
-    from classes.user import Operator
+from classes.user import Operator
 
 
 class Warehouse:
@@ -24,10 +23,16 @@ class Warehouse:
 
         print(f"Не удалось получить доступные места расположения для склада {self.id}")
 
-    def startOperationReceipt(self, oper: "Operator") -> ReceiptOperation:
+    def startOperationReceipt(self, oper: "Operator", product) -> ReceiptOperation:
         global OPERATION_ID
         OPERATION_ID += 1
-        return ReceiptOperation(OPERATION_ID, oper)
+        return ReceiptOperation(OPERATION_ID, oper).prepare(product, self).execute()
+    
+    def getProductById(self, id):
+        for loc in self.storageLocations:
+            for prod in loc.getAllProducts():
+                if prod.id == id:
+                    return prod
 
     def startOperationShipment(self, oper: "Operator") -> ShipmentOperation:
         global OPERATION_ID
@@ -60,5 +65,5 @@ class Warehouse:
     def createOperator(self, name):
         return Operator(1, name)
     
-    def createProduct(self, name, category, size):
-        return Product(1, name, category, size)
+    def createProduct(self, id, name, category, size):
+        return Product(id, name, category, size)
